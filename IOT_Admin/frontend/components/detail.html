@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>관제시스템</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="detail.css" />
+
+    <!--파비콘-->
+    <link rel="shortcut icon" href="../images/favicon.ico" />
+    <!-- 구글 무료 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet" />
+    <!-- 아이콘 -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <!--드론 운행정보-->
+        <div class="driving-info">
+          <!--드론 상세정보-->
+          <div class="drone-info">
+            <h4><i class="fas fa-drone-alt"></i>KAZA-556699</h4>
+            <p>배터리 잔량<i class="fas fa-battery-bolt"></i> : <span>80%</span></p>
+            <p>
+              신호센서 작동 여부<i class="fas fa-satellite-dish"></i> :
+              <span>정상</span>
+            </p>
+            <p>
+              현재 위치<i class="fas fa-map-marker-alt"></i>:
+              <span>대전 선화동 DW아카데미</span>
+            </p>
+            <p>
+              드론 등록날짜<i class="fas fa-calendar"></i> :
+              <span>2022-06-15</span>
+            </p>
+          </div>
+          <!--드론 날짜별 운행정보-->
+          <div class="driving-logs">
+            <h3>최근 운행기록</h3>
+            <ul class="logs-container">
+              <li class="logs-item" onclick="getDrivingHistory()">
+                <p>출발시간 : 2022-11-97 10:09:22</p>
+                <p>도착시간 : 2022-11-07 10:20:22</p>
+              </li>
+              <li class="logs-item">
+                <p>출발시간 : 2022-11-07 10:09:22</p>
+                <p>도착시간 : 2022-11-07 10:20:22</p>
+              </li>
+              <li class="logs-item">
+                <p>출발시간 : 2022-11-07 10:09:22</p>
+                <p>도착시간 : 2022-11-07 10:20:22</p>
+              </li>
+              <li class="logs-item">
+                <p>출발시간 : 2022-11-07 10:09:22</p>
+                <p>도착시간 : 2022-11-07 10:20:22</p>
+              </li>
+              <li class="logs-item">
+                <p>출발시간 : 2022-11-07 10:09:22</p>
+                <p>도착시간 : 2022-11-07 10:20:22</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="kakao-map" class="map"></div>
+    </div>
+  </body>
+  <!--카카오 맵 사용을 위한 JS-->
+  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f196e7aed0b78f2d0e89c6ec564e8d8b"></script>
+  <script>
+    //전역변수
+    var map = null;
+    var marker = null;
+    initMap();
+    function initMap() {
+      var mapContainer = document.getElementById('kakao-map'), // 지도를 표시할 div
+        mapOption = {
+          center: new kakao.maps.LatLng(36.3286904, 127.4229992), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+
+      map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+      var mapTypeControl = new kakao.maps.MapTypeControl(); //스카이뷰 추가
+      map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+      var zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      // 마커가 표시될 위치입니다
+      var markerPosition = new kakao.maps.LatLng(36.3286904, 127.4229992);
+
+      // 마커를 생성합니다
+      marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(map);
+
+      // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+      //marker.setMap(null);
+    }
+
+    var chek = false;
+    function getDrivingHistory() {
+      if (chek) {
+        alert('버튼이 이미 눌렸습니다');
+        return;
+      }
+      chek = true;
+
+      // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+      marker.setMap(null);
+
+      var centerLat = 36.357169;
+      var centerLng = 127.380828;
+
+      map.setLevel(8, { animate: true }, { anchor: new kakao.maps.LatLng(33.450705, 126.570677) });
+
+      var startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 출발 마커이미지의 주소입니다
+        startSize = new kakao.maps.Size(50, 45), // 출발 마커이미지의 크기입니다
+        startOption = {
+          offset: new kakao.maps.Point(15, 43), // 출발 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+        };
+
+      // 출발 마커 이미지를 생성합니다
+      var startImage = new kakao.maps.MarkerImage(startSrc, startSize, startOption);
+
+      // 출발 마커가 표시될 위치입니다
+      var startPosition = new kakao.maps.LatLng(36.3286904, 127.4229992);
+
+      // 출발 마커를 생성합니다
+      var startMarker = new kakao.maps.Marker({
+        map: map, // 출발 마커가 지도 위에 표시되도록 설정합니다
+        position: startPosition,
+        image: startImage, // 출발 마커이미지를 설정합니다
+      });
+
+      var arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다
+        arriveSize = new kakao.maps.Size(50, 45), // 도착 마커이미지의 크기입니다
+        arriveOption = {
+          offset: new kakao.maps.Point(15, 43), // 도착 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+        };
+
+      // 도착 마커 이미지를 생성합니다
+      var arriveImage = new kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
+
+      var arriveDragSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_drag.png', // 도착 마커의 드래그 이미지 주소입니다
+        arriveDragSize = new kakao.maps.Size(50, 64), // 도착 마커의 드래그 이미지 크기입니다
+        arriveDragOption = {
+          offset: new kakao.maps.Point(15, 54), // 도착 마커의 드래그 이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+        };
+
+      // 도착 마커가 표시될 위치입니다
+      var arrivePosition = new kakao.maps.LatLng(36.3711638, 127.3883444);
+
+      // 도착 마커를 생성합니다
+      var arriveMarker = new kakao.maps.Marker({
+        map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
+        position: arrivePosition,
+        image: arriveImage, // 도착 마커이미지를 설정합니다
+      });
+      getPolyLine();
+    }
+
+    //선 나타내는 함수
+    function getPolyLine() {
+      var history = [
+        new kakao.maps.LatLng(36.3286904, 127.4229992),
+        new kakao.maps.LatLng(36.3499999, 127.4370503),
+        new kakao.maps.LatLng(36.3577778, 127.4063889),
+        new kakao.maps.LatLng(36.3711638, 127.3883444),
+      ];
+      var polyline = new kakao.maps.Polyline({
+        endArrow: true,
+        map: map,
+        path: history,
+        strokeWeight: 5,
+        strokeColor: '#db4040',
+        strokeOpacity: 1,
+        strokeStyle: 'solid',
+      });
+
+      //오버레이 구현하기
+      //오버레이란 지도에 html을 그리는 작업(직접 커스텀)
+      for (var i = 1; i < history.length - 1; i++) {
+        var circleOverlay = new kakao.maps.CustomOverlay({
+          content: '<span class="dot"></span>',
+          position: history[i],
+          zIndex: 1,
+        });
+        circleOverlay.setMap(map); //지점 포인트 오버레이 생성
+
+        var time = '2022-11-09 11:41:10';
+        var timeOverlay = new kakao.maps.CustomOverlay({
+          content: '<div class="dotOverlay">Time : <span class="number">' + time + '</span></div>',
+          position: history[i],
+          zIndex: 3,
+          yAnchor: 1,
+        });
+        timeOverlay.setMap(map);
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,102 @@
+ul {
+  list-style: none;
+}
+
+.drone-info h4 {
+  font-size: 25px;
+  color: #e74a3b;
+  margin: 0 0 20px;
+}
+
+.drone-info > p {
+  margin-bottom: 8px;
+}
+
+.fa-calendar {
+  color: peachpuff;
+}
+
+.fa-map-marker-alt {
+  color: #79b8f3;
+}
+
+.fa-satellite-dish {
+  color: rgb(191, 213, 214);
+}
+
+.fa-battery-bolt {
+  color: #ff9300;
+}
+
+/*드론 상세정보*/
+.drone-info {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+/*드론운행정보*/
+.driving-logs {
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  padding: 2% 0;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.driving-logs h3 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.logs-item {
+  text-align: center;
+  width: 100%;
+  font-weight: 500;
+  border: 1px solid #e3e6f0;
+  border-bottom: none;
+  padding: 4%;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.logs-item:hover {
+  color: #fff;
+  background-color: #858796;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav {
+  flex-basis: 25%;
+}
+
+.dot {
+  overflow: hidden;
+  float: left;
+  width: 12px;
+  height: 12px;
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');
+}
+
+.dotOverlay {
+  float: left;
+  background-color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  box-shadow: 0px 1px 2px #888;
+  border-radius: 6px;
+  position: relative;
+  bottom: 10px;
+}
+
+.number {
+  font-weight: bold;
+  color: #ee3152;
+}
